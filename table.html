@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>다이어리</title>
+    <style>
+        td{
+            width: 80px;
+            height: 80px;
+            text-align: center;
+            font-size: 40px;
+            border:2px
+            border-radius: 8px;/*모서리 둥글게*/
+
+        }
+        #bt_enter{
+          height:40px;
+          width:90px;
+        }
+    </style>
+
+    <script type="text/javascript">
+      var reset=0;
+      var count=0;
+      var today = new Date();
+
+      function gotowrite(){
+        window.location ="https://sowon23.github.io/sowon/day_write.html"
+      }
+
+      function prevcalendar(){
+        today = new Date(today.getFullYear(), today.getMonth()-1, today.getDate());
+        reset=1;
+        calendar();
+
+      }
+      function nextcalendar(){
+        today = new Date(today.getFullYear(), today.getMonth()+1, today.getDate());
+        reset=1;
+        calendar();
+      }
+      function calendar(){
+
+        var first_day = new Date(today.getFullYear(), today.getMonth(), 1);
+        var last_day = new Date(today.getFullYear(), today.getMonth()+1, 0);
+
+        var tbCalendarYM = document.getElementById("tbCalendarYM");
+        tbCalendarYM.innerHTML = today.getFullYear() + "년 " + (today.getMonth() + 1) + "월";
+
+        var tb = document.getElementById("calendar");
+        var row = tb.insertRow();
+        var cell = null;
+
+        if(reset==1){
+          for(i=0;i<count;i++){
+            tb.deleteRow(2);
+          }
+        }
+
+        for(i=0;i<first_day.getDay();i++){
+          cell = row.insertCell();
+        }
+        count = 1;
+        for(i=0;i<last_day.getDate();i++){
+          cell = row.insertCell();
+          if(row.cells.length==7){
+            row = tb.insertRow();
+            count+=1;
+          }
+          cell.innerHTML ="<input type='label' onclick='gotowrite()' value='" + (i+1) + "'>";
+        }
+      }
+
+
+    </script>
+  </head>
+  <body>
+    <h1 align="center">달력</h1>
+    <table id="calendar" border="3" align="center"
+    style="border-color:pink ">
+      <tr>
+        <td><label onclick="prevcalendar()">&lt</td>
+        <td align="center" id="tbCalendarYM" colspan="5">
+        a</td>
+        <td><label onclick="nextcalendar()">&gt</td>
+      </tr>
+      <tr>
+        <td align="center"><font color ="red">일</td>
+        <td align="center">월</td>
+        <td align="center">화</td>
+        <td align="center">수</td>
+        <td align="center">목</td>
+        <td align="center">금</td>
+        <td align="center"><font color ="skyblue">토</td>
+      </tr>
+    </table>
+    <script language="javascript" type="text/javascript">
+      calendar();
+    </script>
+  </body>
+</html>
